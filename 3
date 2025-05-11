@@ -1,0 +1,11 @@
+with open('33','r', encoding='utf-8') as f:
+    text=f.read()
+    letters = []
+
+    for i in text:
+        if i.isalpha():
+            i = i.lower()
+            if i not in letters:
+                letters.append(i)
+    print(len(letters))
+    
