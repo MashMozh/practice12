@@ -1,0 +1,28 @@
+with open('55','r', encoding='utf-8') as f:
+    lines = f.readlines()
+
+
+    line1 = lines[0].strip()
+    line2 = lines[1].strip()
+    line3 = lines[2].strip()
+
+
+    unique = []
+
+
+    for i in line1:
+        if i not in line2 and i not in line3:
+            if i not in unique:
+                unique.append(i)
+
+
+    for i in line2:
+        if i not in line1 and i not in line3:
+            if i not in unique:
+                unique.append(i)
+    for i in line3:
+        if i not in line1 and i not in line2:
+            if i not in unique:
+                unique.append(i)
+
+    print(unique)
