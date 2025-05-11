@@ -1,0 +1,71 @@
+def clear_screen():
+    """Функция для имитации очистки экрана"""
+    for _ in range(25):
+        print()
+
+def play_game():
+    # Ввод подсказки и загаданного слова
+    hint = input("Введите подсказку: ")
+    word = input("Введите загаданное слово: ").lower()
+
+    # Имитация очистки экрана 25 пустыми строками
+    clear_screen()
+
+    # Создаем строку, где все буквы заменены на "*"
+    hidden_word = "*" * len(word)
+
+    attempts = 10  # Количество попыток
+    guessed_letters = set()  # Множество для угаданных букв
+    guessed_word = False  # Флаг, который проверяет, угадано ли слово
+
+    while attempts > 0 and not guessed_word:
+        print(hint)
+        print(hidden_word)
+
+        # Выбираем буква или слово
+        guess_type = input("Буква или слово (0 - буква, 1 - слово)? ")
+
+        if guess_type == '0':  # Игрок отгадывает букву
+            letter = input("Введите букву: ").lower()
+            if len(letter) != 1 or not letter.isalpha():
+                print("Пожалуйста, введите одну букву.")
+                continue
+
+            # Если буква уже была угадана
+            if letter in guessed_letters:
+                print(f"Буква {letter} уже была угадана.")
+                continue
+
+            guessed_letters.add(letter)
+
+            # Проверяем, есть ли буква в слове
+            if letter in word:
+                hidden_word = "".join([letter if word[i] == letter else hidden_word[i] for i in range(len(word))])
+                print(f"Правильно! {letter} есть в слове.")
+            else:
+                attempts -= 1
+                print(f"Неверно. Осталось попыток: {attempts}")
+
+        elif guess_type == '1':  # Игрок пытается угадать всё слово
+            guessed_word_input = input("Введите слово: ").lower()
+            if guessed_word_input == word:
+                guessed_word = True
+                hidden_word = word
+            else:
+                attempts -= 1
+                print(f"Неверно. Осталось попыток: {attempts}")
+        else:
+            print("Пожалуйста, выберите правильный вариант (0 или 1).")
+            continue
+
+        # Проверка на победу (все буквы угаданы)
+        if hidden_word == word:
+            guessed_word = True
+
+    if guessed_word:
+        print("Победа!")
+    else:
+        print("Проигрыш!")
+
+# Запуск игры
+play_game()
