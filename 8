@@ -1,0 +1,6 @@
+with open('88','r', encoding='utf-8') as f:
+    sentence = f.read()
+    words = sentence.split()
+    words_sorted = sorted(words, key=len)
+    for word in words_sorted:
+        print(word, end=' ')
