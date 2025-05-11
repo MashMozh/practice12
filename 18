@@ -1,0 +1,52 @@
+def justify_text(text, line_length):
+    # Разбиваем текст на слова
+    words = text.split()
+
+    # Строки, которые будем формировать
+    lines = []
+    current_line = []
+    current_length = 0  # Длина текущей строки
+
+    for word in words:
+        # Если добавление текущего слова превышает максимальную длину строки
+        if current_length + len(word) + len(current_line) > line_length:
+            # Формируем строку с выравниванием
+            if len(current_line) == 1:
+                lines.append(current_line[0] + ' ' * (line_length - len(current_line[0])))
+            else:
+                # Вычисляем сколько пробелов нужно вставить между словами
+                total_spaces = line_length - current_length
+                spaces_between_words = total_spaces // (len(current_line) - 1)  # Равномерные пробелы
+                extra_spaces = total_spaces % (len(current_line) - 1)  # Дополнительные пробелы
+
+                line = current_line[0]
+                for i in range(1, len(current_line)):
+                    # Добавляем нужное количество пробелов
+                    line += ' ' * (spaces_between_words + (1 if i <= extra_spaces else 0)) + current_line[i]
+
+                lines.append(line)
+
+            # Очищаем текущую строку и начинаем новую
+            current_line = [word]
+            current_length = len(word)
+        else:
+            # Если слово помещается в текущую строку
+            current_line.append(word)
+            current_length += len(word)
+
+    # Формируем последнюю строку (если она не пуста)
+    if current_line:
+        lines.append(' '.join(current_line) + ' ' * (line_length - len(' '.join(current_line))))
+
+    return '\n'.join(lines)
+
+
+# Ввод текста и длины строки
+text = input("Введите текст: ")
+line_length = int(input("Введите максимальную длину строки: "))
+
+# Получаем результат
+result = justify_text(text, line_length)
+
+# Выводим результат
+print(result)
