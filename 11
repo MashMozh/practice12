@@ -1,0 +1,32 @@
+# Петя начинает первым
+with open('11', 'r', encoding='utf-8') as file:
+    line = file.read().strip()
+
+cities = line.lower().split()
+
+
+def last_significant_letter(word):
+    for letter in reversed(word):
+        if letter not in ('ь', 'ъ', 'ы'):
+            return letter
+    return word[-1]
+
+
+for i in range(1, len(cities)):
+    prev_city = cities[i - 1]
+    current_city = cities[i]
+
+    last_letter = last_significant_letter(prev_city)
+
+    if current_city[0] != last_letter:
+        if i % 2 == 0:
+            print("Петя победил (Вася нарушил правила).")
+        else:
+            print("Вася победил (Петя нарушил правила).")
+        break
+else:
+
+    if (len(cities) - 1) % 2 == 0:
+        print("Петя победил (назвал последний город).")
+    else:
+        print("Вася победил (назвал последний город).")
