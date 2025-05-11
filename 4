@@ -1,0 +1,14 @@
+with open('44','r', encoding='utf-8') as f:
+    text = f.read()
+    counts = {}
+    for i in text:
+        if i in counts:
+            counts[i] += 1
+        else:
+            counts[i] = 1
+
+    for i in counts:
+        if counts[i] == 3:
+            print('Символ:', i)
+            break
+            
