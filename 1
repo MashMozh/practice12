@@ -1,0 +1,9 @@
+import re #Модуль re в Python — это модуль для работы с регулярными выражениями.
+with open('smth', 'r', encoding='utf-8') as f:
+    text = f.read()
+    matches = re.findall(r'\s+', text)
+    if matches:
+        max_spaces = max(len(match) for match in matches)
+    else:
+        max_spaces = 0
+print(max_spaces)
