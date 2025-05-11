@@ -1,0 +1,86 @@
+def calculate(expression):
+    # Определяем приоритет операторов
+    precedence = {'+': 1, '-': 1, '*': 2, '/': 2}
+
+    # Стек для чисел
+    values = []
+
+    # Стек для операторов
+    operators = []
+
+    i = 0
+    while i < len(expression):
+        # Пропускаем пробелы
+        if expression[i] == ' ':
+            i += 1
+            continue
+
+        # Если текущий символ - цифра, извлекаем число
+        if expression[i].isdigit():
+            num = 0
+            while i < len(expression) and expression[i].isdigit():
+                num = num * 10 + int(expression[i])
+                i += 1
+            values.append(num)
+
+        # Если текущий символ - открывающая скобка, добавляем в стек операторов
+        elif expression[i] == '(':
+            operators.append(expression[i])
+            i += 1
+
+        # Если текущий символ - закрывающая скобка, вычисляем до открывающей скобки
+        elif expression[i] == ')':
+            while operators and operators[-1] != '(':
+                operator = operators.pop()
+                right = values.pop()
+                left = values.pop()
+                if operator == '+':
+                    values.append(left + right)
+                elif operator == '-':
+                    values.append(left - right)
+                elif operator == '*':
+                    values.append(left * right)
+                elif operator == '/':
+                    values.append(left / right)
+            operators.pop()  # Убираем '('
+            i += 1
+
+        # Если текущий символ - оператор, применяем его с учетом приоритета
+        elif expression[i] in precedence:
+            while (operators and operators[-1] != '(' and
+                   precedence[operators[-1]] >= precedence[expression[i]]):
+                operator = operators.pop()
+                right = values.pop()
+                left = values.pop()
+                if operator == '+':
+                    values.append(left + right)
+                elif operator == '-':
+                    values.append(left - right)
+                elif operator == '*':
+                    values.append(left * right)
+                elif operator == '/':
+                    values.append(left / right)
+            operators.append(expression[i])
+            i += 1
+
+    # Выполняем оставшиеся операции в стеке
+    while operators:
+        operator = operators.pop()
+        right = values.pop()
+        left = values.pop()
+        if operator == '+':
+            values.append(left + right)
+        elif operator == '-':
+            values.append(left - right)
+        elif operator == '*':
+            values.append(left * right)
+        elif operator == '/':
+            values.append(left / right)
+
+    return values[0]
+
+
+# Пример использования:
+expression = input("Введите арифметическое выражение: ")
+result = calculate(expression)
+print("Результат:", result)
