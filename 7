@@ -1,0 +1,8 @@
+with open('77','r', encoding='utf-8') as f:
+    sentence = f.read()
+    words = sentence.split()
+    min_length = len(words[0])
+    for word in words:
+        if len(word) < min_length:
+            min_length = len(word)
+    print(min_length)
