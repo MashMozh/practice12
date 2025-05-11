@@ -1,0 +1,6 @@
+with open('66','r', encoding='utf-8') as f:
+    sentence = f.read()
+    words = sentence.split()
+    reversed_words = words[::-1]
+    reversed_sentence = ' '.join(reversed_words)
+    print(reversed_sentence)
