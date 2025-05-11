@@ -1,0 +1,11 @@
+import keyword
+
+name = input("Введите строку для проверки: ")
+
+if name.isidentifier():
+    if name not in keyword.kwlist:
+        print("Можно использовать как имя в Python.")
+    else:
+        print("Нельзя использовать: это ключевое слово Python.")
+else:
+    print("Нельзя использовать: недопустимый идентификатор.")
