@@ -1,0 +1,55 @@
+def clear_screen():
+    """Функция для имитации очистки экрана"""
+    for _ in range(25):
+        print()
+
+def count_bulls_and_cows(guess, secret):
+    """Функция для подсчета быков и коров"""
+    bulls = 0
+    cows = 0
+    # Преобразуем в строки, чтобы можно было работать с позициями
+    for i in range(4):
+        if guess[i] == secret[i]:  # Быки (совпали и по значению, и по позиции)
+            bulls += 1
+        elif guess[i] in secret:  # Коровы (совпали по значению, но не по позиции)
+            cows += 1
+    return bulls, cows
+
+def play_game():
+    # Ведущий вводит число
+    secret_number = input("Введите четырёхзначное число с неповторяющимися цифрами: ")
+
+    # Проверка на корректность ввода
+    while len(secret_number) != 4 or len(set(secret_number)) != 4 or not secret_number.isdigit():
+        print("Число должно быть четырёхзначным, содержать неповторяющиеся цифры.")
+        secret_number = input("Введите четырёхзначное число с неповторяющимися цифрами: ")
+
+    # Очистка экрана 25 пустыми строками
+    clear_screen()
+
+    attempts = 10  # Количество попыток
+    secret_number = list(secret_number)  # Сохраняем как список для удобства
+
+    while attempts > 0:
+        guess = input(f"Осталось попыток: {attempts}. Введите вашу догадку: ")
+
+        # Проверка на корректность ввода
+        if len(guess) != 4 or len(set(guess)) != 4 or not guess.isdigit():
+            print("Число должно быть четырёхзначным, содержать неповторяющиеся цифры.")
+            continue
+
+        bulls, cows = count_bulls_and_cows(guess, secret_number)
+
+        print(f"Быков: {bulls} Коров: {cows}")
+
+        if bulls == 4:  # Если все быки (отгадано правильно)
+            print("Победа!")
+            break
+
+        attempts -= 1
+
+    if attempts == 0:
+        print("Проигрыш!")
+
+# Запуск игры
+play_game()
